@@ -1,0 +1,47 @@
+{{#if hasContent}}
+    <div class="d-flex justify-content-center">
+        {{#each totalReviews}}
+            <div>
+                <div class="d-flex flex-column">
+                    <div>
+                        <h3>{{ ../results.book_title }}</h3>
+                        by <i>{{ ../results.book_author }}</i>
+                    </div>
+                    <div>
+                        Reviewer: {{ ../results.byline }}
+                    </div>
+                    <div>
+                        Date: {{ ../results.publication_dt }}
+                    </div>
+                    <div>
+                        <i>{{ ../results.summary }}</i>
+                    </div>
+                    <div class="d-flex mt-3 justify-content-between">
+                        <div>
+                            <small><i>{{ ../copyright }}</i></small>
+                        </div>
+                        <div>
+                            <a href="{{../results.url}}">Full review</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+{{else}}
+    <div class="text-center">
+        Sorry! There are no reviews for this book!
+    </div>
+{{/if}}
+
+<div class="d-flex justify-content-between mt-4 mb-3">
+    <div>
+        <a class="btn btn-primary" href="/book/{{ getBookTitleFirstChar }}">Back to Book List</a>
+    </div>
+    
+    <div>
+        <a class="btn btn-primary" href="/">Back To Main Page</a>
+    </div>
+    
+</div>
+

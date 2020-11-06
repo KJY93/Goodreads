@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-3">
+            <img class="img-fluid img-thumbnail rounded" src="{{ recs.image_url }}" alt="{{ recs.title }}" />
+            <div>
+                <div><i><strong>Pages: </strong></i> {{ recs.pages }}</div>
+                <div><i><strong>Rating: </strong></i> {{ recs.rating }} ({{ recs.rating_count }})</div>
+                <div><i><strong>Genres: </strong></i> {{ recs.genres }}</div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-9">
+            <div><h2>{{ recs.title }}</h2></div>
+            <div>by <i>{{ recs.authors }}</i></div>
+            <div class="mt-3">{{ recs.description }}</div>
+
+            <div class="mt-3">
+                <a href="/reviews/{{ recs.title }}">Find Review</a>
+            </div>
+        </div>
+    </div>
+</div>

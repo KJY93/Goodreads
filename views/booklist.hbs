@@ -1,0 +1,47 @@
+<h3>Books title starts with: {{ getTitle }}</h3>
+
+{{#if hasContent}}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Authors</th>
+                <th scope="col">Genres</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{#each recs}}
+                <tr>
+                    <td>{{ this.title }}</td>
+                    <td>{{ this.authors }}</td>
+                    <td>{{ this.genres }}</td>
+                    <td>{{ this.rating }}</td>
+
+                    <td><a href="/bookdetails/{{ this.book_id }}">Read More</a></td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <h5>Sorry! No result is found!</h5>
+{{/if}}
+
+<div class="d-flex justify-content-end">
+    {{#if currOffsetIndex}}
+        <div class="mr-3">
+            <a class="btn btn-primary" href={{ prevOffsetIndex }} role="button">Prev</a>  
+        </div>
+    {{/if}}
+    <div>
+        {{#if isNotEnd}}
+            <a class="btn btn-primary" href={{ nextOffsetIndex }} role="button">Next</a>
+        {{/if}}
+    </div>
+</div>
+
+<div class="mt-3">
+    Click <a href="/"><strong>HERE</strong></a> to go back to the main page!
+</div>
