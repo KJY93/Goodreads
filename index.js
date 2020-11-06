@@ -7,7 +7,6 @@ const withQuery = require('with-query').default
 const getPage = require('./utils/Page.js')
 const morgan = require('morgan')
 
-
 // Configuring port
 const PORT = parseInt(process.argv[2]) || parseInt(process.env.PORT) || 3000
 
@@ -27,9 +26,6 @@ const OFFSET_LIMIT = 10
 const API_BASE_URL = 'https://api.nytimes.com/svc/books/v3/reviews.json'
 const API_KEY = process.env.API_KEY || ""
 
-
-
-
 // SQL Query
 SQL_GET_BOOK_BY_ID = 'select * from book2018 WHERE book_id = ?'
 
@@ -42,8 +38,6 @@ const startApp = async (app, pool) => {
 
         // Releasing the connection
         conn.release()
-
-
 
         // Starting up the server
         if (API_KEY) {
@@ -209,7 +203,7 @@ app.get('/reviews/:bookTitle', async (req, res) => {
             },
             'application/json': () => {
                 res.type('application/json')
-                res.json(recs)
+                res.json(result)
             }
         })
     }
