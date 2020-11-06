@@ -189,7 +189,8 @@ app.get('/reviews/:bookTitle', async (req, res) => {
         const response = await fetch(queryUrl)
         const result = (await response.json())
         console.info(result)
-
+        
+        res.status(200)
         res.format({
             'text/html': () => {
                 res.type('text/html')
