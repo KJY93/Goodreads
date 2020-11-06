@@ -1,4 +1,6 @@
-<h3>Books title starts with: {{ getTitle }}</h3>
+<div class="text-center">
+    <h3>Books title starts with: {{ getTitle }}</h3>
+</div>
 
 {{#if hasContent}}
     <table class="table table-striped">
@@ -26,7 +28,9 @@
         </tbody>
     </table>
 {{else}}
-    <h5>Sorry! No result is found!</h5>
+    <div class="text-center">
+         <h5>Sorry! No result is found!</h5>
+    </div>
 {{/if}}
 
 <div class="d-flex justify-content-end">
