@@ -1,11 +1,16 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 col-md-3">
+        <div class="col-sm-12 col-md-3  ">
             <img class="img-fluid img-thumbnail rounded" src="{{ recs.image_url }}" alt="{{ recs.title }}" />
             <div>
                 <div><i><strong>Pages: </strong></i> {{ recs.pages }}</div>
                 <div><i><strong>Rating: </strong></i> {{ recs.rating }} ({{ recs.rating_count }})</div>
-                <div><i><strong>Genres: </strong></i> {{ recs.genres }}</div>
+                <div>
+                    <div><i><strong>Genres: </strong></i></div>
+                    <div id="genres">
+                        {{ recs.genres }}
+                    </div>
+                </div>
             </div>
         </div>
 

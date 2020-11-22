@@ -6,6 +6,7 @@ const fetch = require('node-fetch')
 const withQuery = require('with-query').default
 const getPage = require('./utils/Page.js')
 const morgan = require('morgan')
+const { format } = require('./utils/Format.js')
 
 // Configuring port
 const PORT = parseInt(process.argv[2]) || parseInt(process.env.PORT) || 3000
@@ -144,24 +145,10 @@ app.get('/bookdetails/:bookId', async (req, res) => {
             res.type('text/html')
             res.send(`Book ${getBookId} not found`)
         }
-        
-        res.status(200)
-        res.format({
-            'text/html': () => {
-                res.type('text/html')
-                res.render('details', {
-                    recs: recs[0],
-                })
-            },
-            'application/json': () => {
-                res.type('application/json')
-                res.json(recs[0])
-            },
-            default: () => {
-                // Log the request and respond with 406 if the MIME type is not supported
-                res.status(406).send('Not Acceptable')
-            }
-        })
+    
+        const params = { 'recs': recs[0]}
+        // Call the format function to send the response
+        format('details', res)(params)
     }
     catch (err) {
         console.info(err)
@@ -178,7 +165,7 @@ app.get('/bookdetails/:bookId', async (req, res) => {
 app.get('/reviews/:bookTitle', async (req, res) => {
 
     let getBookTitle = (req.params.bookTitle)
-    let getBookTitleFirstChar = getBookTitle[0]
+    let getBookTitleFirstChar = getBookTitle[0] 
 
     const queryUrl = withQuery(API_BASE_URL, {
         title: getBookTitle.toString(),
@@ -188,24 +175,17 @@ app.get('/reviews/:bookTitle', async (req, res) => {
     try {
         const response = await fetch(queryUrl)
         const result = (await response.json())
-        console.info(result)
 
-        res.format({
-            'text/html': () => {
-                res.type('text/html')
-                res.render('reviews', {
-                    hasContent: result['results'].length > 0,
-                    results: result['results'][0],
-                    totalReviews: result['results'],
-                    copyright: result.copyright,
-                    getBookTitleFirstChar,
-                })
-            },
-            'application/json': () => {
-                res.type('application/json')
-                res.json(result)
-            }
-        })
+        const params = {
+            hasContent: result['results'].length > 0,
+            results: result['results'][0],
+            totalReviews: result['results'],
+            copyright: result.copyright,
+            getBookTitleFirstChar,
+        }
+
+        // Call the format function to send the response
+        format('reviews', res)(params)
     }
     catch (err) {
         console.info(err)
@@ -222,9 +202,8 @@ app.get('*', function(req, res, next) {
     err.statusCode = 404;
     err.shouldRedirect = true; // New property on err so that our middleware will redirect
     next(err);
-  });
+  })
   
-
 app.use(function(err, req, res, next) {
     console.error(err.message);
     if (!err.statusCode) err.statusCode = 500; // Sets a generic server error status code if none is part of the err
@@ -234,4 +213,4 @@ app.use(function(err, req, res, next) {
     } else {
         res.status(err.statusCode).send(err.message); // If shouldRedirect is not defined in our error, sends our original err data
     }
-});
+})
