@@ -175,6 +175,7 @@ app.get('/reviews/:bookTitle', async (req, res) => {
     try {
         const response = await fetch(queryUrl)
         const result = (await response.json())
+<<<<<<< HEAD
 
         const params = {
             hasContent: result['results'].length > 0,
@@ -186,6 +187,27 @@ app.get('/reviews/:bookTitle', async (req, res) => {
 
         // Call the format function to send the response
         format('reviews', res)(params)
+=======
+        console.info(result)
+        
+        res.status(200)
+        res.format({
+            'text/html': () => {
+                res.type('text/html')
+                res.render('reviews', {
+                    hasContent: result['results'].length > 0,
+                    results: result['results'][0],
+                    totalReviews: result['results'],
+                    copyright: result.copyright,
+                    getBookTitleFirstChar,
+                })
+            },
+            'application/json': () => {
+                res.type('application/json')
+                res.json(result)
+            }
+        })
+>>>>>>> b921451af4709f288e65601a497991c9c8f401ac
     }
     catch (err) {
         console.info(err)
